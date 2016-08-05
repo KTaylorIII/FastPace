@@ -14,12 +14,16 @@ class Parser:
 
 
     def extract_links(self, html):
-        returnLinks = [];
-        soup = BeautifulSoup(html, 'html.parser');
-        links = soup.find_all('a');
-        for link in links:
-            returnLinks.append(link.get('href'));
-        return returnLinks;
+        """
+        Uses a regex to extract all .onion links from a page, whether bound
+        in tags or not. Useful for identifying user-submitted links on a
+        given page
+        """
+        
+        link_pattern = re.compile('\w+\.onion');
+        links = link_pattern.findall(html);
+
+        return links;
 
 
     def extract_title(self, html):
