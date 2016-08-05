@@ -1,0 +1,6 @@
+Before you come screaming at me, you must install the following python packages. Included along are license types or links to the 
+licenses themselves
+1. BeautifulSoup - MIT
+2. Stem - LGPLv3
+
+Note: Stem is covered under the LGPLv3 license.
