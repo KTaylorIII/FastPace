@@ -1,1 +1,1 @@
-DEBUG = True;
+VERBOSE = True;

@@ -31,7 +31,7 @@ class Scanner:
             data = {};
             data['url'] = self.parser.extract_domain_from_link(starturl);
             data['title'] = self.parser.extract_title(response);
-            if DEBUG:
+            if VERBOSE:
                 print '[!] ' + root_link_path + ' - ' + data['title'];
 
             iface.add_domain(data);
@@ -55,7 +55,7 @@ class Scanner:
             data = {};
             data['url'] = self.parser.extract_domain_from_link(url);
             data['title'] = self.parser.extract_title(response);
-            if DEBUG:
+            if VERBOSE:
                 print '[!] ' + linkpath + ' - ' + data['title'];
 
             dbface.add_domain(data);
