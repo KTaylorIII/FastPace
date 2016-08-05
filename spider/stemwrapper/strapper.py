@@ -19,20 +19,21 @@ class Strapper:
         Takes a url and outputs the requested html document.
         HTMLParser expected to handle the request elsewhere in the program.
         """
-    
-        buffer = io.BytesIO();
-        query = pycurl.Curl();
-        query.setopt(pycurl.URL, url);
-        query.setopt(pycurl.PROXY, 'localhost');
-        # SOCKS_PORT referenced from local config.py
-        query.setopt(pycurl.PROXYPORT, SOCKS_PORT);
-        query.setopt(pycurl.PROXYTYPE, pycurl.PROXYTYPE_SOCKS5_HOSTNAME);
-        query.setopt(pycurl.WRITEFUNCTION, buffer.write);
-        
         try:
+            buffer = io.BytesIO();
+            query = pycurl.Curl();
+            query.setopt(pycurl.URL, url);
+            query.setopt(pycurl.PROXY, 'localhost');
+            # SOCKS_PORT referenced from local config.py
+            query.setopt(pycurl.PROXYPORT, SOCKS_PORT);
+            query.setopt(pycurl.PROXYTYPE, pycurl.PROXYTYPE_SOCKS5_HOSTNAME);
+            query.setopt(pycurl.WRITEFUNCTION, buffer.write);
+        
             query.perform();
             return buffer.getvalue();
         except pycurl.error as e:
+            return False;
+        except Exception as e:
             return False;
         
 

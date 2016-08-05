@@ -1,1 +1,2 @@
-SQLITE_FILE_DIR = './database/fastpace.db'
+SQLITE_FILE_DIR = './fastpace.db'
+DEBUG = True

@@ -35,6 +35,8 @@ class Initializer:
 
     def _connect_db(self):
         return sqlite3.connect(SQLITE_FILE_DIR);
+
+
     def _table_exists(self, tablename):
         conn = self._connect_db();
         c = conn.cursor();
@@ -46,10 +48,12 @@ class Initializer:
             return False;
         else:
             return True;
+
+
     def _init_domains_db(self):
         if not self._table_exists('Domains'):
             conn = self._connect_db();
             c = conn.cursor();
-            c.execute('CREATE TABLE Domains (id INT NOT NULL, url TEXT NOT NULL)');
+            c.execute('CREATE TABLE Domains (id INT NOT NULL, url TEXT NOT NULL, title TEXT NOT NULL)');
             conn.commit();
             conn.close();

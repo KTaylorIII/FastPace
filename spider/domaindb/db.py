@@ -8,19 +8,25 @@ class DomainsInterface:
     def __init__(self, suppress_domains=False):
         pass;
 
+
     def initialize_db(self):
         Initializer().init_db();
+
+
     def fetch_domain(self, url):
         conn = self._connectdb();
         c = conn.cursor();
         
         c.execute('SELECT * FROM Domains WHERE url = ?', (url,));
         result = c.fetchone();
-        domain = {};
-        domain['id'] = result[0];
-        domain['url'] = result[1];
+        if result:   
+            domain = {};
+            domain['id'] = result[0];
+            domain['url'] = result[1];
         
-        return domain;
+            return domain;
+        else:
+            return False;
 
     def fetch_domains(self):
         conn = self._connectdb();
@@ -29,6 +35,8 @@ class DomainsInterface:
         c.execute('SELECT * FROM Domains');
         results = c.fetchall();
         conn.close();
+        if not results:
+            return False;
         domains = [];
         for result in results:
             domain = {};
@@ -38,6 +46,8 @@ class DomainsInterface:
         return domains;
         
     def add_domain(self, data):
+        if DEBUG:
+            print '[*] ' + data['url'];
         # data: Expected args include url, title, and date visited
         # Future items of note may include lexical analysis of suspected
         # websites' involvement in illicit activities
@@ -45,10 +55,11 @@ class DomainsInterface:
         domain = {};
         domain['id'] = self._get_max_id() + 1;
         domain['url'] = data['url'];
+        domain['title'] = data['title'];
 
         conn = self._connectdb();
         c = conn.cursor();
-        c.execute('INSERT INTO Domains (id, url) VALUES (?,?)', (domain['id'],domain['url'],));
+        c.execute('INSERT INTO Domains (id, url, title) VALUES (?,?,?)', (domain['id'],domain['url'],domain['title'],));
         conn.commit();
         conn.close();
 
