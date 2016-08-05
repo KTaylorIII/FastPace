@@ -14,6 +14,7 @@ class DomainsInterface:
 
 
     def fetch_domain(self, url):
+        url = unicode(url);
         conn = self._connectdb();
         c = conn.cursor();
         
@@ -22,7 +23,7 @@ class DomainsInterface:
         if result:   
             domain = {};
             domain['id'] = result[0];
-            domain['url'] = result[1];
+            domain['url'] = unicode(result[1]);
         
             return domain;
         else:
@@ -41,7 +42,7 @@ class DomainsInterface:
         for result in results:
             domain = {};
             domain['id'] = result[0];
-            domain['url'] = result[1];
+            domain['url'] = unicode(result[1]);
             domains.append(domain);
         return domains;
         
@@ -54,8 +55,8 @@ class DomainsInterface:
         
         domain = {};
         domain['id'] = self._get_max_id() + 1;
-        domain['url'] = data['url'];
-        domain['title'] = data['title'];
+        domain['url'] = unicode(data['url']);
+        domain['title'] = unicode(data['title']);
 
         conn = self._connectdb();
         c = conn.cursor();

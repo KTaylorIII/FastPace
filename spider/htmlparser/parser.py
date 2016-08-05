@@ -1,11 +1,10 @@
-from bs4 import BeautifulSoup
 import re
 
 class Parser:
 
     """
-    Contains two helper methods that:
-    a.) Extract links from html using underlying BeautifulSoup & re methods
+    Contains helper methods that:
+    a.) Extract links from html using re
     b.) Determines whether a given service is a valid tor service
     c.) Strip trailing slashes and url information after, obtaining the domain
     """
@@ -15,25 +14,27 @@ class Parser:
 
     def extract_links(self, html):
         """
-        Uses a regex to extract all .onion links from a page, whether bound
-        in tags or not. Useful for identifying user-submitted links on a
-        given page
+        Uses regex to extract all .onion links from a page, whether bound
+        in <a> tags or not.
         """
         
         link_pattern = re.compile('\w+\.onion');
         links = link_pattern.findall(html);
+        uni_links = [];
+        for link in links:
+            uni_links.append(unicode(link));
 
-        return links;
+        return uni_links;
 
 
     def extract_title(self, html):
-        soup = BeautifulSoup(html, 'html.parser');
-        title = soup.title;
-        if title:
-            title_data = title.contents[0];
-            return title_data;
+        title_pattern = re.compile('(?<=\<title\>)(.)+(?=\<\/title\>)')
+        result = title_pattern.search(html);
+        if result:
+            title_data = result.group();
+            return unicode(title_data);
         else:
-            return 'Untitled';
+            return u'Untitled';
     
 
     def is_tor_service(self, domainname):
@@ -49,7 +50,7 @@ class Parser:
     def extract_domain_from_link(self, html):
         pattern = re.compile("\w+\.onion");
         result = pattern.search(html);
-        return result.group();
+        return unicode(result.group());
         
 ###
 ##

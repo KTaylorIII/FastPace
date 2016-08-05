@@ -25,9 +25,7 @@ class Scanner:
         if not response:
             print '[-] ERROR: ' + starturl + ' does not exist!';
             return False;
-        # In the future, html parser will include a lexicon analysis unit.
-        # But for testing purposes, iterating through the links and crawling
-        # the tree will do for now.
+
         else:
             root_link_path = starturl;
             data = {};
@@ -65,8 +63,8 @@ class Scanner:
             for link in links:
                 try:
                     self._processurl(link, linkpath + ' -> ' + link);
-                except TypeError:
-                    pass;
+                except Exception:
+                    continue;
 
 
 

@@ -30,7 +30,7 @@ class Strapper:
             query.setopt(pycurl.WRITEFUNCTION, buffer.write);
         
             query.perform();
-            return buffer.getvalue();
+            return unicode(buffer.getvalue());
         except pycurl.error as e:
             return False;
         except Exception as e:
