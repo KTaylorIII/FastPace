@@ -9,4 +9,4 @@ A personal project aimed at probing the dark web ("Onionland" to be specific). D
 4. To use FastPace right away, call 'python run.py' from within the directory. You'll be prompted with a command line prompt into which you will supply a starting .onion service url.
 5. All output is saved to fastpace.db. Use sqlite or another utility of your choice, if available, to view the data.
 
-Note: As of FastPace v.0.0.2, BeautifulSoup is no longer required. Only Stem is required, which is available under the LGPLv3 license at 
+Note: As of FastPace v.0.0.2, BeautifulSoup is no longer required. Only Stem is required, which is available under the LGPLv3 license through the Python package manager
