@@ -3,13 +3,18 @@ import argparse
 class Argparser:
     
     def __init__(self):
-        self.parser = argpar.ArgumentParser();
-        self.parser.add_argument('-c','--clear-database', help='Clear database on run', action='store_true');
-        self.parser.add_argument('-p','--prompt-user', help='Prompt the user for the initial .onion url', action='store_true');
+        self.parser = argparse.ArgumentParser();
+        self.parser.add_argument('-c','--clear', help='Clear database on run', action='store_true');
+        self.parser.add_argument('-p','--prompt', help='Prompt the user for the initial .onion url', action='store_true');
+        self.parser.add_argument('-v','--verbose', help='Adjust output verbosity', action='store_true');
 
     def parse(self):
         args = self.parser.parse_args();
-        return args;
+        returnval = {};
+        returnval['clear'] = args.clear;
+        returnval['prompt'] = args.prompt;
+        returnval['verbosity'] = args.verbosity;
+        return returnval;
         
         
         
