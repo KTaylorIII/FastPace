@@ -2,5 +2,7 @@ Before you come screaming at me, you must install the following python packages.
 licenses themselves
 
 1. Stem - LGPLv3
+2. Pycurl - LGPLv3
+3. Tor - (Tor license available within licenses)
 
-Note: Stem is covered under the LGPLv3 license.
+Note: Pycurl and Stem are covered under the LGPLv3 license.

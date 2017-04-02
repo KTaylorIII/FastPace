@@ -2,27 +2,28 @@ from htmlparser.parser import Parser
 from domaindb.db import DomainsInterface
 from stemwrapper.strapper import Strapper
 
-from config import *
-
 class Scanner:
-    def __init__(self):
+    def __init__(self, clear_db=False, verbosity=False):
         self.parser = Parser();
         self.requester = None;
+        if clear_db:
+            DomainsInterface().purge_domains();
+        self.verbosity = verbosity;
 
     def start(self, starturl):
-        if not self.parser.is_tor_service(starturl):
+        if not self.parser.is_tor_service(starturl) and self.verbosity:
             print '[-] ERROR: ' + starturl + ' is not a valid tor service!'
             return False;
         iface = DomainsInterface();
         iface.initialize_db();
-        if iface.fetch_domain(self.parser.extract_domain_from_link(starturl)):
+        if iface.fetch_domain(self.parser.extract_domain_from_link(starturl)) and self.verbosity:
             print '[-] ERROR: ' + starturl + ' has already been mapped!'
             print 'Have you purged the database yet?';
             return False;
 
         self.requester = Strapper();
         response = self.requester.request(starturl);
-        if not response:
+        if not response and self.verbosity:
             print '[-] ERROR: ' + starturl + ' does not exist!';
             return False;
 
@@ -31,7 +32,7 @@ class Scanner:
             data = {};
             data['url'] = self.parser.extract_domain_from_link(starturl);
             data['title'] = self.parser.extract_title(response);
-            if VERBOSE:
+            if self.verbosity:
                 print '[!] ' + root_link_path + ' - ' + data['title'];
 
             iface.add_domain(data);
@@ -55,7 +56,7 @@ class Scanner:
             data = {};
             data['url'] = self.parser.extract_domain_from_link(url);
             data['title'] = self.parser.extract_title(response);
-            if VERBOSE:
+            if self.verbosity:
                 print '[!] ' + linkpath + ' - ' + data['title'];
 
             dbface.add_domain(data);

@@ -19,10 +19,8 @@ class Initializer:
     def cleanup_db(self):
         conn = self._connect_db();
         c = conn.cursor();
-        c.execute('SELECT name FROM SQLITE_MASTER');
-        results = c.fetchall();
-        for result in results:
-            c.execute('DROP TABLE ?', result[0]);
+        if self._table_exists('Domains'):
+            c.execute('DROP TABLE Domains');
         conn.commit();
         conn.close();
 
@@ -40,7 +38,6 @@ class Initializer:
     def _table_exists(self, tablename):
         conn = self._connect_db();
         c = conn.cursor();
-        print tablename;
         c.execute('SELECT * FROM SQLITE_MASTER WHERE name = ?', (tablename,));
         results = c.fetchall();
         conn.close();
