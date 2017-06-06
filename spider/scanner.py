@@ -28,17 +28,16 @@ class Scanner:
             return False;
 
         else:
-            root_link_path = starturl;
             data = {};
             data['url'] = self.parser.extract_domain_from_link(starturl);
             data['title'] = self.parser.extract_title(response);
             if self.verbosity:
-                print '[!] ' + root_link_path + ' - ' + data['title'];
+                print '[!] ' + starturl + ' - ' + data['title'];
 
             iface.add_domain(data);
             links = self.parser.extract_links(response);
             for link in links:
-                self._processurl(link, root_link_path + ' -> ' + link);
+                self._processurl(link, starturl + ' -> ' + link);
         
 
     def _processurl(self, url, linkpath):
